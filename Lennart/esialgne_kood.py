@@ -22,7 +22,7 @@ def küsi_ülesande_andmed():
     while True:
         try:
             tähtaeg=datetime.strptime(input('Sisestage ülesande tähtaeg (PP.KK.AAAA): '), '%d.%m.%Y')
-            if tähtaeg.date()<=datetime.today():
+            if tähtaeg.date()<=date.today():
                 print('Tähtaeg on juba möödas, proovige uuesti.')
                 continue
             break
@@ -83,9 +83,45 @@ def aeg_parajaks(kuluv_aeg):
 
 
 def aega_tähtajani(tähtaeg):
+    tähtaeg=tähtaeg.date()
     täna=date.today()
     päevad_töötamiseks=[]
     while täna<tähtaeg:
         päevad_töötamiseks.append(täna)
         täna+=timedelta(days=1)
     return päevad_töötamiseks
+
+
+def päevas_õppida(vaba_aeg, päevad_töötamiseks):
+    kuupäevad_õppimiseks=[]
+    for päev in päevad_töötamiseks:
+        nädalapäev=päev.weekday()
+        kuupäevad_õppimiseks.append([päev, []])
+        for vaba in vaba_aeg:
+            if vaba[0]==nädalapäev:
+                for ajavahemik in vaba[1]:
+                    kuupäevad_õppimiseks[-1][1].append([ajavahemik])
+    return kuupäevad_õppimiseks
+
+
+def tunnid_päevas(kuupäevad_õppimiseks):
+    päevade_tunnid=[]
+    for päev in kuupäevad_õppimiseks:
+        päeva_tunnid=0
+        for ajavahemik in päev[1]:
+            algus = datetime.combine(päev[0], ajavahemik[0])
+            lõpp = datetime.combine(päev[0], ajavahemik[1])
+            kestus = (lõpp - algus).total_seconds() / 3600
+            päeva_tunnid += kestus
+        päevade_tunnid.append([päev[0], päeva_tunnid])
+    return päevade_tunnid
+
+
+def kas_on_aega(kuluv_aeg, päevade_tunnid):
+    kokku_aega=0
+    for päev in päevade_tunnid:
+        kokku_aega+=päev[1]
+    return kokku_aega>=kuluv_aeg
+
+
+
