@@ -120,8 +120,45 @@ def tunnid_päevas(kuupäevad_õppimiseks):
 def kas_on_aega(kuluv_aeg, päevade_tunnid):
     kokku_aega=0
     for päev in päevade_tunnid:
-        kokku_aega+=päev[1]
+        kokku_aega+=min(päev[1], 4)
     return kokku_aega>=kuluv_aeg
 
 
+def aja_jaotus(kuluv_aeg, päevade_tunnid):
+    jaotus=[]
+    for päev in päevade_tunnid:
+        if päev[1]>0:
+            tunnid=päev[1]
+            if tunnid>4:
+                tunnid=4
+            aega_järel = kuluv_aeg - tunnid
+            if aega_järel <=0:
+                jaotus.append([päev[0], kuluv_aeg])
+                break
+            else:
+                jaotus.append([päev[0], tunnid])
+            kuluv_aeg -= tunnid
+    return jaotus
 
+
+def määra_vahemikud(jaotus, kuupäevad_õppimiseks):
+    graafik=[]
+    for päev in jaotus:
+        for kuupäev in kuupäevad_õppimiseks:
+            if päev[0]==kuupäev[0]:
+                ajavahemikud=kuupäev[1]
+                jäänud_tunnid=päev[1]
+                for ajavahemik in ajavahemikud:
+                    algus = datetime.combine(päev[0], ajavahemik[0])
+                    lõpp = datetime.combine(päev[0], ajavahemik[1])
+                    kestus = (lõpp - algus).total_seconds() / 3600
+                    if kestus <= jäänud_tunnid:
+                        graafik.append([päev[0], algus.time(), lõpp.time()])
+                        jäänud_tunnid -= kestus
+                    else:
+                        uus_lõpp = (algus + timedelta(hours=jäänud_tunnid)).time()
+                        graafik.append([päev[0], algus.time(), uus_lõpp])
+                        jäänud_tunnid = 0
+                    if jäänud_tunnid <= 0:
+                        break
+    return graafik
