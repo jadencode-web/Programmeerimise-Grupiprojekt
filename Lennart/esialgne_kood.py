@@ -100,7 +100,7 @@ def päevas_õppida(vaba_aeg, päevad_töötamiseks):
         for vaba in vaba_aeg:
             if vaba[0]==nädalapäev:
                 for ajavahemik in vaba[1]:
-                    kuupäevad_õppimiseks[-1][1].append([ajavahemik])
+                    kuupäevad_õppimiseks[-1][1].append(ajavahemik)
     return kuupäevad_õppimiseks
 
 
@@ -162,3 +162,24 @@ def määra_vahemikud(jaotus, kuupäevad_õppimiseks):
                     if jäänud_tunnid <= 0:
                         break
     return graafik
+
+
+def main():
+    ülesande_andmed=küsi_ülesande_andmed()
+    vaba_aeg=küsi_vaba_aeg()
+    kuluv_aeg=aeg_parajaks(ülesande_andmed[1])
+    päevad_töötamiseks=aega_tähtajani(ülesande_andmed[2])
+    kuupäevad_õppimiseks=päevas_õppida(vaba_aeg, päevad_töötamiseks)
+    päevade_tunnid=tunnid_päevas(kuupäevad_õppimiseks)
+    if kas_on_aega(kuluv_aeg, päevade_tunnid):
+        jaotus=aja_jaotus(kuluv_aeg, päevade_tunnid)
+        graafik=määra_vahemikud(jaotus, kuupäevad_õppimiseks)
+        print(f'Graafik ülesande "{ülesande_andmed[0]}" jaoks:')
+        for päev in graafik:
+            print(f'{päev[0].strftime("%d.%m.%Y")}: {päev[1].strftime("%H:%M")} - {päev[2].strftime("%H:%M")}')
+    else:
+        print('Kahjuks pole piisavalt aega selle ülesande jaoks.')
+
+
+if __name__ == '__main__':
+    main()
