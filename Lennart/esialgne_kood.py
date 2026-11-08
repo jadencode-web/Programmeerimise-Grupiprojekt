@@ -1,7 +1,7 @@
 from datetime import datetime, time, date, timedelta
 from math import ceil
 
-
+#küsib andmed ülesande kohta
 def küsi_ülesande_andmed():
     while True:
         ülesande_nimi=input('Sisestage ülesande nimi: ').strip()
@@ -30,7 +30,7 @@ def küsi_ülesande_andmed():
             print('Vigane kuupäev, kasutage formaati PP.KK.AAAA')
     return [ülesande_nimi, eeldatav_ajakulu, tähtaeg]
 
-
+#vaatab et ajavahemikud ei ületaks 23:30
 def uni_on_ka_tähtis(ajavahemikud):
     uneaeg=time(23, 30)
     for ajavahemik in ajavahemikud:
@@ -39,6 +39,7 @@ def uni_on_ka_tähtis(ajavahemikud):
             print('Uni on tähtis, ajavahemiku lõpuks määrati 23:30')
     return ajavahemikud
 
+#kontrollib kas ajavahemikud on õigesti sisestatud ja et need ei kattuks üksteisega
 def kontrolli_ajavahemikke(ajavahemikud):
     for algus, lõpp in ajavahemikud:
         if algus >= lõpp:
@@ -52,7 +53,8 @@ def kontrolli_ajavahemikke(ajavahemikud):
                 return False
     return True
 
-            
+
+#küsib kasutajalt õppimiseks vaba aja            
 def küsi_vaba_aeg():
     vaba_aeg=[]
     päevad=['esmaspäev', 'teisipäev', 'kolmapäev', 'neljapäev', 'reede', 'laupäev', 'pühapäev']
@@ -77,11 +79,13 @@ def küsi_vaba_aeg():
     return vaba_aeg
 
 
+#rakendab väikese buffer aja ja tagastab ümardatult 0.5 tunni täpsusega
 def aeg_parajaks(kuluv_aeg):
     a=ceil(kuluv_aeg * 1.1 *2)/2
     return a
 
 
+#otsib päevad tänasest ülesande tähtajani
 def aega_tähtajani(tähtaeg):
     tähtaeg=tähtaeg.date()
     täna=date.today()
@@ -92,6 +96,7 @@ def aega_tähtajani(tähtaeg):
     return päevad_töötamiseks
 
 
+#jagab kuupäevadele õppimise ajavahemikud
 def päevas_õppida(vaba_aeg, päevad_töötamiseks):
     kuupäevad_õppimiseks=[]
     for päev in päevad_töötamiseks:
@@ -104,6 +109,7 @@ def päevas_õppida(vaba_aeg, päevad_töötamiseks):
     return kuupäevad_õppimiseks
 
 
+#arvutab mitu tundi saab iga päev kokku õppida
 def tunnid_päevas(kuupäevad_õppimiseks):
     päevade_tunnid=[]
     for päev in kuupäevad_õppimiseks:
@@ -117,6 +123,7 @@ def tunnid_päevas(kuupäevad_õppimiseks):
     return päevade_tunnid
 
 
+#kontrollib kas ülesande täitmiseks on piisavalt aega
 def kas_on_aega(kuluv_aeg, päevade_tunnid):
     kokku_aega=0
     for päev in päevade_tunnid:
@@ -124,6 +131,7 @@ def kas_on_aega(kuluv_aeg, päevade_tunnid):
     return kokku_aega>=kuluv_aeg
 
 
+#jaotab ülesandeks õppimise tunnid päevadele laiali
 def aja_jaotus(kuluv_aeg, päevade_tunnid):
     jaotus=[]
     for päev in päevade_tunnid:
@@ -141,6 +149,7 @@ def aja_jaotus(kuluv_aeg, päevade_tunnid):
     return jaotus
 
 
+#määrab eelmise funktsiooni tundide järgi ajavahemikud õppimiseks
 def määra_vahemikud(jaotus, kuupäevad_õppimiseks):
     graafik=[]
     for päev in jaotus:
