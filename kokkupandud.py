@@ -1,3 +1,13 @@
+"""
+Projekt: Ajaplaneerija
+Autorid: Jaden Ordašokov, Lennart Parašin
+Kirjeldus: programm küsib kasutajalt ülesande ja ajad, millal ta saab õppida,
+ning jagab ülesande enne tähtaega vabade aegade peale. Pärast 90 min õppimist
+tuleb 30 min paus.
+Allikad: abiks kasutasime Claude AI-d.
+"""
+
+
 from datetime import datetime, time, date, timedelta
 from math import ceil
 
