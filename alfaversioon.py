@@ -16,7 +16,7 @@ Allikad: abiks kasutasime Claude AI-d ja ChatGPT-d.
 from datetime import datetime, time, date, timedelta
 from math import ceil
 
-
+#küsib andmed ülesande kohta
 def küsi_ülesande_andmed():
     while True:
         ülesande_nimi=input('Sisestage ülesande nimi: ').strip()
@@ -45,7 +45,7 @@ def küsi_ülesande_andmed():
             print('Vigane kuupäev, kasutage formaati PP.KK.AAAA')
     return [ülesande_nimi, eeldatav_ajakulu, tähtaeg]
 
-
+#vaatab et ajavahemikud ei ületaks 23:30
 def uni_on_ka_tähtis(ajavahemikud):
     uneaeg=time(23, 30)
     for ajavahemik in ajavahemikud:
@@ -54,6 +54,7 @@ def uni_on_ka_tähtis(ajavahemikud):
             print('Uni on tähtis, ajavahemiku lõpuks määrati 23:30')
     return ajavahemikud
 
+#kontrollib kas ajavahemikud on õigesti sisestatud ja et need ei kattuks üksteisega
 def kontrolli_ajavahemikke(ajavahemikud):
     for algus, lõpp in ajavahemikud:
         if algus >= lõpp:
@@ -67,7 +68,7 @@ def kontrolli_ajavahemikke(ajavahemikud):
                 return False
     return True
 
-
+#küsib kasutajalt õppimiseks vaba aja
 def küsi_vaba_aeg():
     vaba_aeg=[]
     päevad=['esmaspäev', 'teisipäev', 'kolmapäev', 'neljapäev', 'reede', 'laupäev', 'pühapäev']
@@ -91,12 +92,12 @@ def küsi_vaba_aeg():
         vaba_aeg.append([päevad.index(päev), ajavahemikud])
     return vaba_aeg
 
-
+#rakendab väikese buffer aja ja tagastab ümardatult 0.5 tunni täpsusega
 def aeg_parajaks(kuluv_aeg):
-    a=ceil(kuluv_aeg * 1.1 *2)/2
-    return a
+    uus_aeg=ceil(kuluv_aeg * 1.1 *2)/2
+    return uus_aeg
 
-
+#otsib päevad tänasest ülesande tähtajani
 def aega_tähtajani(tähtaeg):
     tähtaeg=tähtaeg.date()
     täna=date.today()
@@ -106,7 +107,7 @@ def aega_tähtajani(tähtaeg):
         täna+=timedelta(days=1)
     return päevad_töötamiseks
 
-
+#jagab kuupäevadele õppimise ajavahemikud
 def päevas_õppida(vaba_aeg, päevad_töötamiseks):
     kuupäevad_õppimiseks=[]
     for päev in päevad_töötamiseks:
