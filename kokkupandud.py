@@ -4,6 +4,11 @@ Autorid: Jaden Ordašokov, Lennart Parašin
 Kirjeldus: programm küsib kasutajalt ülesande ja ajad, millal ta saab õppida,
 ning jagab ülesande enne tähtaega vabade aegade peale. Pärast 90 min õppimist
 tuleb 30 min paus.
+Käivitamine: käivita fail (nt "python ajaplaneerija.py" või Thonnys Run).
+Programm küsib ülesande nime, ajakulu tundides ja tähtaja (PP.KK.AAAA),
+seejärel iga nädalapäeva kohta ajad, millal saad õppida (nt 16:00-18:00,
+mitu vahemikku komaga eraldatult, tühi rida = sel päeval ei saa).
+Lõpuks prinditakse graafik.
 Allikad: abiks kasutasime Claude AI-d ja ChatGPT-d.
 """
 
