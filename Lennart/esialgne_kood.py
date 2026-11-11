@@ -81,8 +81,8 @@ def küsi_vaba_aeg():
 
 #rakendab väikese buffer aja ja tagastab ümardatult 0.5 tunni täpsusega
 def aeg_parajaks(kuluv_aeg):
-    a=ceil(kuluv_aeg * 1.1 *2)/2
-    return a
+    uus_aeg=ceil(kuluv_aeg * 1.1 *2)/2
+    return uus_aeg
 
 
 #otsib päevad tänasest ülesande tähtajani
