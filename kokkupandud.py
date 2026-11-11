@@ -4,7 +4,7 @@ Autorid: Jaden Ordašokov, Lennart Parašin
 Kirjeldus: programm küsib kasutajalt ülesande ja ajad, millal ta saab õppida,
 ning jagab ülesande enne tähtaega vabade aegade peale. Pärast 90 min õppimist
 tuleb 30 min paus.
-Allikad: abiks kasutasime Claude AI-d.
+Allikad: abiks kasutasime Claude AI-d ja ChatGPT-d.
 """
 
 
